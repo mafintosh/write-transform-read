@@ -6,6 +6,9 @@ Write to a transform stream and read the output using a function
 npm install write-transform-read
 ```
 
+[![build status](http://img.shields.io/travis/mafintosh/write-transform-read.svg?style=flat)](http://travis-ci.org/mafintosh/write-transform-read)
+![dat](http://img.shields.io/badge/Development%20sponsored%20by-dat-green.svg?style=flat)
+
 # Usage
 
 ``` js
