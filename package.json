@@ -1,6 +1,6 @@
 {
   "name": "write-transform-read",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Write to a transform stream and read the output using a function",
   "main": "index.js",
   "dependencies": {
