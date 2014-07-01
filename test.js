@@ -1,4 +1,5 @@
 var writeread = require('./')
+var stream = require('stream')
 var through = require('through2')
 var tape = require('tape')
 
@@ -41,6 +42,24 @@ tape('multiple transform', function(t) {
   })
   transform({hello:3}, function(err, data) {
     t.same(data, {echo:{hello:3}})
+  })
+})
+
+tape('two streams', function(t) {
+  var readable = stream.Readable({objectMode: true})
+  var writable = stream.Writable({objectMode: true})
+  readable._read = function() {}
+  writable._write = function(data, enc, cb) {
+    readable.push({echo: data})
+    cb()
+  }
+
+
+  var transform = writeread(writable, readable)
+
+  transform({hello:'world'}, function(err, data) {
+    t.same(data, {echo:{hello:'world'}})
+    t.end()
   })
 })
 
