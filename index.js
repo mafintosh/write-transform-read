@@ -4,12 +4,13 @@ module.exports = function(writable, readable) {
   readable = readable || writable
 
   var queue = []
-  var error
+  var readableError
+  var writableError
 
   var consume = function() {
     var data
     while (queue.length && (data = readable.read())) queue.shift()(null, data)
-    if (error) while (queue.length) queue.shift()(error)
+    if (readableError) while (queue.length) queue.shift()(readableError)
   }
 
   readable.on('readable', consume)
@@ -23,7 +24,16 @@ module.exports = function(writable, readable) {
     consume()
   })
 
+  eos(readable, {readable:true, writable:false}, function(err) {
+    readableError = readableError || err || new Error('readable stream closed')
+  })
+
+  eos(writable, {readable:false, writable:true}, function(err) {
+    writableError = writableError || err || new Error('writable stream closed')
+  })
+
   return function(data, cb) {
+    if (writableError) return cb(writableError)
     queue.push(cb)
     writable.write(data)
     consume()
