@@ -1,6 +1,6 @@
 {
-  "name": "write-transform-read.jbenet",
-  "version": "1.1.0",
+  "name": "write-transform-read",
+  "version": "1.0.0",
   "description": "Write to a transform stream and read the output using a function",
   "main": "index.js",
   "dependencies": {
